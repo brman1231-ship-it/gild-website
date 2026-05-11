@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GILD Digital Agency — We Engineer Businesses</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBxlX4iYE4NCqLPnbT-OsNd5b_zoImODM4",
+    authDomain: "gild-agency-db.firebaseapp.com",
+    databaseURL: "https://gild-agency-db-default-rtdb.firebaseio.com",
+    projectId: "gild-agency-db",
+    storageBucket: "gild-agency-db.firebasestorage.app",
+    messagingSenderId: "121748572297",
+    appId: "1:121748572297:web:9b950afe45547c7442de58"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  window.__gildDB        = db;
+  window.__gildAddDoc    = addDoc;
+  window.__gildColl      = collection;
+  window.__gildTimestamp = serverTimestamp;
+</script>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init('3rCFsHWcxbqRtnYxd');
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-logo">GILD</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+  <p class="ld-sub">Full-Stack Business Engineering · Est. 2026</p>
+</div>
+
+<!-- PARTICLES -->
+<canvas id="particles"></canvas>
+
+<!-- GLOBAL CONTROLS -->
+<div class="global-controls" id="globalControls">
+  <button class="ctrl-btn" id="langBtn" onclick="toggleLang()">EN</button>
+  <button class="ctrl-btn" id="currBtn" onclick="toggleCurr()">USD</button>
+  <button class="ctrl-btn" id="themeBtn" onclick="toggleTheme()">☀️</button>
+</div>
+
+<!-- ═══════════════ PAGE 1: HERO ═══════════════ -->
+<div class="page active" id="pg-hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span data-en="Full-Stack Business Engineering · Est. 2026"
+            data-am="ሙሉ ቢዝነስ ምህንድስና · 2026">Full-Stack Business Engineering · Est. 2026</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="tl" data-en="Your Business"   data-am="ቢዝነስዎ">Your Business</span>
+      <span class="tl gold" data-en="Looks Busy." data-am="ደሰነፈ።">Looks Busy.</span>
+      <span class="tl" data-en="We Make It"      data-am="እኛ ግን">We Make It</span>
+      <span class="tl gold" data-en="Work."       data-am="እናሰራዋለን።">Work.</span>
+    </h1>
+    <p class="hero-sub"
+       data-en="Brand. System. Operations. — The three layers every serious business needs. The three layers almost no agency builds."
+       data-am="ብራንድ። ሲስተም። ኦፕሬሽን። — ሁሉም ቢዝነስ የሚፈልጋቸው ሶስት ሽፋኖች።">
+      Brand. System. Operations. — The three layers every serious business needs. The three layers almost no agency builds.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="goTo('pg-select')"
+              data-en="Secure Your Slot" data-am="ቦታዎን ያስጠብቁ">Secure Your Slot</button>
+      <button class="btn-ghost" onclick="goTo('pg-main')"
+              data-en="Explore GILD" data-am="GILD ይቃኙ">Explore GILD</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="sn" data-target="120">0</span><span class="sn">+</span>
+        <span class="sl" data-en="Projects Built" data-am="ፕሮጀክቶች">Projects Built</span>
+      </div>
+      <div class="sdiv"></div>
+      <div class="stat">
+        <span class="sn" data-target="4">0</span>
+        <span class="sl" data-en="Packages" data-am="ጥቅሎች">Packages</span>
+      </div>
+      <div class="sdiv"></div>
+      <div class="stat">
+        <span class="sn" data-target="20">0</span><span class="sn">+</span>
+        <span class="sl" data-en="Services" data-am="አገልግሎቶች">Services</span>
+      </div>
+      <div class="sdiv"></div>
+      <div class="stat">
+        <span class="sn" data-target="14">0</span>
+        <span class="sl" data-en="Countries" data-am="ሀገሮች">Countries</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span data-en="Scroll" data-am="ሸብልብ">Scroll</span>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 2: MAIN ═══════════════ -->
+<div class="page" id="pg-main">
+  <nav class="mnav" id="mainNav">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <div class="nav-links">
+      <button class="nl active" onclick="showSec('about')"    data-en="About Us"   data-am="ስለ እኛ">About Us</button>
+      <button class="nl"        onclick="showSec('story')"    data-en="Our Story"  data-am="ታሪካችን">Our Story</button>
+      <button class="nl"        onclick="showSec('platform')" data-en="Platform"   data-am="ፕላትፎርም">Platform</button>
+      <button class="nl"        onclick="showSec('faq')"      data-en="FAQ"        data-am="ጥያቄዎች">FAQ</button>
+      <button class="nl"        onclick="showSec('contact')"  data-en="Contact"    data-am="አግኙን">Contact</button>
+    </div>
+    <div class="nav-r">
+      <button class="btn-gold sm" onclick="goTo('pg-select')"
+              data-en="Secure Your Slot" data-am="ቦታ ያስጠብቁ">Secure Your Slot</button>
+    </div>
+    <button class="ham" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mob-menu" id="mobMenu">
+    <button class="mob-close" onclick="toggleMob()">✕</button>
+    <button onclick="showSec('about');toggleMob()"    data-en="About Us"  data-am="ስለ እኛ">About Us</button>
+    <button onclick="showSec('story');toggleMob()"    data-en="Our Story" data-am="ታሪካችን">Our Story</button>
+    <button onclick="showSec('platform');toggleMob()" data-en="Platform"  data-am="ፕላትፎርም">Platform</button>
+    <button onclick="showSec('faq');toggleMob()"      data-en="FAQ"       data-am="ጥያቄዎች">FAQ</button>
+    <button onclick="showSec('contact');toggleMob()"  data-en="Contact"   data-am="አግኙን">Contact</button>
+    <button class="btn-gold" onclick="goTo('pg-select');toggleMob()"
+            data-en="Secure Your Slot" data-am="ቦታ ያስጠብቁ">Secure Your Slot</button>
+  </div>
+
+  <div class="shortcut-bar">
+    <span data-en="Quick Access:" data-am="ፈጣን:">Quick Access:</span>
+    <button onclick="goTo('pg-packages')" data-en="📦 Packages"  data-am="📦 ጥቅሎች">📦 Packages</button>
+    <button onclick="goTo('pg-services')" data-en="⚡ Services"   data-am="⚡ አገልግሎቶች">⚡ Services</button>
+    <button onclick="showSec('contact')"  data-en="📞 Quote"     data-am="📞 ዋጋ">📞 Quote</button>
+  </div>
+
+  <div class="secs-wrap" id="secsWrap">
+
+    <!-- ABOUT -->
+    <section class="sec active" id="sec-about">
+      <div class="sec-in">
+        <div class="eyebrow" data-en="WHO WE ARE" data-am="እኛ ማን ነን">WHO WE ARE</div>
+        <h2 class="sec-title">
+          <span data-en="Not an Agency. A " data-am="ኤጀንሲ አይደለንም። ">Not an Agency. A </span>
+          <span class="gold" data-en="Business Engineering" data-am="ቢዝነስ ምህንድስና">Business Engineering</span>
+          <span data-en=" Firm." data-am=" ድርጅት ነን።"> Firm.</span>
+        </h2>
+        <p class="sec-txt"
+           data-en="GILD designs, builds, and installs the complete digital infrastructure of a business — Brand Identity, Professional Website, Backend Systems, Smart Automation, and Operational Frameworks — in a single, permanent, handover engagement. We don't sell you months. We engineer your business — once, correctly, to gold standard."
+           data-am="GILD የቢዝነስ ሙሉ ዲጂታል መሠረተ ልማት ያቅዳል፣ ይገነባል እና ይጭናል — ብራንድ ማንነት፣ ዌብሳይት፣ Backend ሲስተሞች፣ አውቶሜሽን እና ኦፕሬሽናል ፍሬምወርኮች — በአንድ ቋሚ handover ኤንጌጅመንት።">
+          GILD designs, builds, and installs the complete digital infrastructure of a business — Brand Identity, Professional Website, Backend Systems, Smart Automation, and Operational Frameworks — in a single, permanent, handover engagement.
+        </p>
+
+        <!-- PILLARS -->
+        <div class="pillars">
+          <div class="pillar">
+            <div class="p-icon">◆</div>
+            <div class="p-name" data-en="FOUNDATION" data-am="መሰረት">FOUNDATION</div>
+            <div class="p-desc" data-en="Brand · Website · Presence" data-am="ብራንድ · ዌብሳይት · ፊት">Brand · Website · Presence</div>
+          </div>
+          <div class="p-arrow">→</div>
+          <div class="pillar">
+            <div class="p-icon">◈</div>
+            <div class="p-name" data-en="SYSTEM" data-am="ሲስተም">SYSTEM</div>
+            <div class="p-desc" data-en="Bot · SEO · Automation" data-am="ቦት · SEO · አውቶሜሽን">Bot · SEO · Automation</div>
+          </div>
+          <div class="p-arrow">→</div>
+          <div class="pillar">
+            <div class="p-icon">❖</div>
+            <div class="p-name" data-en="OPERATION" data-am="ኦፐሬሽን">OPERATION</div>
+            <div class="p-desc" data-en="SOP · CRM · Dashboard" data-am="SOP · CRM · ዳሽቦርድ">SOP · CRM · Dashboard</div>
+          </div>
+        </div>
+
+        <!-- DIFF GRID -->
+        <div class="diff-grid">
+          <div class="diff-card">
+            <div class="d-icon">⊗</div>
+            <div class="d-title" data-en="Other Agencies" data-am="ሌሎች ኤጀንሲዎች">Other Agencies</div>
+            <ul class="d-list bad">
+              <li data-en="Monthly retainers forever"         data-am="ዘላለማዊ ወርሃዊ ክፍያ">Monthly retainers forever</li>
+              <li data-en="Brand OR backend — never both"     data-am="ብራንድ ወይ Backend — ሁለቱ አይደለም">Brand OR backend — never both</li>
+              <li data-en="Nothing integrates"                data-am="ምንም አይዋሃድም">Nothing integrates</li>
+              <li data-en="You stay dependent on them"        data-am="ጥገኛ ሆነው ይቆያሉ">You stay dependent on them</li>
+            </ul>
+          </div>
+          <div class="diff-card gold-card">
+            <div class="d-icon">⚜️</div>
+            <div class="d-title">GILD</div>
+            <ul class="d-list good">
+              <li data-en="One-time build — yours forever"      data-am="አንድ ጊዜ ግንባታ — ለዘላለም">One-time build — yours forever</li>
+              <li data-en="Brand + System + Ops — all three"   data-am="ብራንድ + ሲስተም + ኦፕስ — ሶስቱም">Brand + System + Ops — all three</li>
+              <li data-en="Everything connected and integrated" data-am="ሁሉም ተያያዘ">Everything connected and integrated</li>
+              <li data-en="Complete handover — self-sufficient" data-am="ሙሉ handover">Complete handover — self-sufficient</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="sec-cta-row">
+          <button class="btn-gold" onclick="goTo('pg-select')"
+                  data-en="Secure Your Slot →" data-am="ቦታዎን ያስጠብቁ →">Secure Your Slot →</button>
+          <button class="btn-ghost" onclick="goTo('pg-packages')"
+                  data-en="View Packages" data-am="ጥቅሎችን ይመልከቱ">View Packages</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="sec" id="sec-story">
+      <div class="sec-in">
+        <div class="eyebrow" data-en="THE GENESIS" data-am="ታሪካችን">THE GENESIS</div>
+        <h2 class="sec-title">
+          <span data-en="Why " data-am="ለምን ">Why </span>
+          <span class="gold">GILD</span>
+          <span data-en=" Exists" data-am=" አለ"> Exists</span>
+        </h2>
+        <p class="sec-quote">"A business without infrastructure is just an idea with a logo."</p>
+        <p class="sec-txt"
+           data-en="We founded GILD in 2026 in Addis Ababa after observing the same expensive mistake across businesses of every size. They were investing in visibility — content, ads, social media — month after month. And yet leads fell through the cracks. Websites didn't convert. Everything broke down when the owner wasn't present. The answer was always the same: the infrastructure was broken. We built GILD to fix that — permanently."
+           data-am="GILD ን 2026 ዓ.ም አዲስ አበባ ውስጥ መሰረትነው ብዙ ቢዝነሶች ላይ ተመሳሳይ ስህተት ካስተዋልን በኋላ። ወር ለወር ታይነት ላይ ኢንቨስት ያደርጉ ነበር። ሆኖም ሊዶቹ ይጠፉ ነበር። GILD ን ይህን ለዘለዓለም ለማስተካከል ሰራነው።">
+          We founded GILD in 2026 in Addis Ababa after observing the same expensive mistake across businesses of every size.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-n">01</div>
+            <div>
+              <div class="step-title" data-en="The Peeling"  data-am="መገፈፍ">The Peeling</div>
+              <div class="step-desc"  data-en="Strip away ineffective layers obscuring your brand's true value" data-am="ብራንድዎ እውነተኛ ዋጋ የሚሸፍኑ ንብርብሮችን ያስወግዱ">Strip away ineffective layers obscuring your brand's true value</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">02</div>
+            <div>
+              <div class="step-title" data-en="The Forging"  data-am="መቅረጽ">The Forging</div>
+              <div class="step-desc"  data-en="Engineer a powerful integrated digital infrastructure from the ground up" data-am="ከስር ጀምሮ ኃይለኛ ዲጂታል መሠረተ ልማት ይቅረጹ">Engineer a powerful integrated digital infrastructure</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-n">03</div>
+            <div>
+              <div class="step-title" data-en="The Gilding"  data-am="መለበጥ">The Gilding</div>
+              <div class="step-desc"  data-en="Hand over a complete, documented, self-running business ecosystem" data-am="ሙሉ፣ ሰነድ የታደለ ስነ-ምህዳር ያስረክቡ">Hand over a complete, documented, self-running business ecosystem</div>
+            </div>
+          </div>
+        </div>
+        <div class="sec-cta-row">
+          <button class="btn-gold" onclick="goTo('pg-select')"
+                  data-en="Start Your Build →" data-am="ይጀምሩ →">Start Your Build →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLATFORM -->
+    <section class="sec" id="sec-platform">
+      <div class="sec-in">
+        <div class="eyebrow" data-en="OUR PLATFORM" data-am="ፕላትፎርማችን">OUR PLATFORM</div>
+        <h2 class="sec-title">
+          <span data-en="Find Us " data-am="ያግኙን ">Find Us </span>
+          <span class="gold" data-en="Everywhere" data-am="በሁሉም">Everywhere</span>
+        </h2>
+        <div class="plat-grid">
+          <a href="https://t.me/gild_agency"                   target="_blank" class="plat-card"><div class="plat-icon">✈</div><div class="plat-name">Telegram</div><div class="plat-handle">@gild_agency</div></a>
+          <a href="https://www.instagram.com/gild_agency"      target="_blank" class="plat-card"><div class="plat-icon">◻</div><div class="plat-name">Instagram</div><div class="plat-handle">@gild_agency</div></a>
+          <a href="https://www.facebook.com/share/18Ph7UH2Xq/" target="_blank" class="plat-card"><div class="plat-icon">f</div><div class="plat-name">Facebook</div><div class="plat-handle">GILD Agency</div></a>
+          <a href="https://www.tiktok.com/@gild.agency"        target="_blank" class="plat-card"><div class="plat-icon">♪</div><div class="plat-name">TikTok</div><div class="plat-handle">@gild.agency</div></a>
+          <a href="https://x.com/Gild_Agency"                  target="_blank" class="plat-card"><div class="plat-icon">𝕏</div><div class="plat-name">X / Twitter</div><div class="plat-handle">@Gild_Agency</div></a>
+          <a href="mailto:gild.agency.et@gmail.com"                             class="plat-card"><div class="plat-icon">✉</div><div class="plat-name">Email</div><div class="plat-handle">gild.agency.et@gmail.com</div></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec" id="sec-faq">
+      <div class="sec-in">
+        <div class="eyebrow" data-en="QUESTIONS" data-am="ጥያቄዎች">QUESTIONS</div>
+        <h2 class="sec-title">
+          <span data-en="Frequently " data-am="ብዙ ">Frequently </span>
+          <span class="gold" data-en="Asked" data-am="የሚጠየቁ">Asked</span>
+        </h2>
+        <div class="faq-list" id="faqList"></div>
+        <div class="sec-cta-row" style="margin-top:32px">
+          <button class="btn-ghost" onclick="goTo('pg-hero')"
+                  data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="sec" id="sec-contact">
+      <div class="sec-in">
+        <div class="eyebrow" data-en="GET IN TOUCH" data-am="ያግኙን">GET IN TOUCH</div>
+        <h2 class="sec-title">
+          <span data-en="Start Your " data-am="ቦታዎን ">Start Your </span>
+          <span class="gold" data-en="Build" data-am="ያስጠብቁ">Build</span>
+        </h2>
+        <p class="sec-txt"
+           data-en="Book a free 30-minute consultation. No pressure. Just a genuine conversation about your business infrastructure."
+           data-am="ነፃ 30 ደቂቃ ምክክር ያስይዙ። ምንም ግፊት የለም።">
+          Book a free 30-minute consultation. No pressure. Just a genuine conversation about your business infrastructure.
+        </p>
+        <div class="contact-opts">
+          <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="contact-card">
+            <div class="cc-icon">in</div>
+            <div class="cc-label">LinkedIn</div>
+            <div class="cc-val" data-en="Book Consultation" data-am="ምክክር ያስይዙ">Book Consultation</div>
+          </a>
+          <a href="mailto:gild.agency.et@gmail.com" class="contact-card">
+            <div class="cc-icon">✉</div>
+            <div class="cc-label">Email</div>
+            <div class="cc-val">gild.agency.et@gmail.com</div>
+          </a>
+        </div>
+        <div class="contact-meta">
+          <span>📍 Addis Ababa, Ethiopia</span>
+          <span data-en="🌍 Serving clients globally" data-am="🌍 ዓለምአቀፍ ደንበኞችን">🌍 Serving clients globally</span>
+          <span data-en="🕐 Mon–Sat · 9AM–7PM EAT" data-am="🕐 ሰኞ–ቅዳሜ · 9AM–7PM">🕐 Mon–Sat · 9AM–7PM EAT</span>
+        </div>
+        <div class="sec-cta-row" style="margin-top:32px">
+          <button class="btn-ghost" onclick="goTo('pg-hero')"
+                  data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end secs-wrap -->
+
+  <div class="more-btn-wrap">
+    <button class="more-btn" onclick="goTo('pg-hero')"
+            data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+  </div>
+
+  <footer class="footer">
+    <div class="ft-in">
+      <span class="ft-logo">GILD</span>
+      <span class="ft-copy" data-en="© 2026 GILD Digital Agency. All rights reserved." data-am="© 2026 GILD ዲጂታል ኤጀንሲ።">© 2026 GILD Digital Agency. All rights reserved.</span>
+      <span class="ft-tag" data-en="We Don't Just Build Businesses. We Engineer Them." data-am="ቢዝነሶችን ብቻ አንገነባም። እናሰራቸዋለን።">We Don't Just Build Businesses. We Engineer Them.</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════ PAGE 3: SELECT ═══════════════ -->
+<div class="page" id="pg-select">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <button class="back-btn" onclick="goTo('pg-main')">
+      ← <span data-en="Back" data-am="ወደ ኋላ">Back</span>
+    </button>
+  </nav>
+  <div class="select-wrap">
+    <div class="eyebrow" data-en="CHOOSE YOUR PATH" data-am="መንገድዎን ይምረጡ">CHOOSE YOUR PATH</div>
+    <h2 class="sec-title">
+      <span data-en="What Are You " data-am="ምን ">What Are You </span>
+      <span class="gold" data-en="Building?" data-am="እየገነቡ ነዎት?">Building?</span>
+    </h2>
+    <p class="sel-sub" data-en="Two paths. Same gold standard. All permanent." data-am="ሁለት መንገዶች። ተመሳሳይ ወርቃማ ደረጃ። ሁሉም ቋሚ።">Two paths. Same gold standard. All permanent.</p>
+    <div class="sel-cards">
+      <div class="sel-card" onclick="goTo('pg-packages')">
+        <div class="sel-shine"></div>
+        <div class="sel-icon">📦</div>
+        <div class="sel-badge" data-en="FULL BUILD" data-am="ሙሉ ግንባታ">FULL BUILD</div>
+        <h3 data-en="Packages" data-am="ጥቅሎች">Packages</h3>
+        <p data-en="Complete infrastructure. Brand + System + Ops — all three layers, integrated, permanent." data-am="ሙሉ መሠረተ ልማት። ብራንድ + ሲስተም + ኦፕስ — ሶስቱም ሽፋኖች፣ ቋሚ።">Complete infrastructure. Brand + System + Ops — all three layers, integrated, permanent.</p>
+        <div class="sel-from" data-en="From $380" data-am="ከ $380">From $380</div>
+        <div class="sel-cta" data-en="Explore Packages →" data-am="ጥቅሎችን ይመልከቱ →">Explore Packages →</div>
+      </div>
+      <div class="sel-card" onclick="goTo('pg-services')">
+        <div class="sel-shine"></div>
+        <div class="sel-icon">⚡</div>
+        <div class="sel-badge" data-en="À LA CARTE" data-am="ነጠላ">À LA CARTE</div>
+        <h3 data-en="Single Services" data-am="ነጠላ አገልግሎቶች">Single Services</h3>
+        <p data-en="Precision builds. Pay for exactly what you need — same GILD gold standard." data-am="ትክክለኛ ግንባታዎች። ለሚፈልጉት ብቻ ይክፈሉ — ተመሳሳይ GILD ደረጃ።">Precision builds. Pay for exactly what you need — same GILD gold standard.</p>
+        <div class="sel-from" data-en="From $20" data-am="ከ $20">From $20</div>
+        <div class="sel-cta" data-en="Browse Services →" data-am="አገልግሎቶችን ይፈልጉ →">Browse Services →</div>
+      </div>
+    </div>
+    <div class="more-btn-wrap">
+      <button class="more-btn" onclick="goTo('pg-hero')"
+              data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 4: PACKAGES ═══════════════ -->
+<div class="page" id="pg-packages">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <div class="nav-back-group">
+      <button class="back-btn" onclick="goTo('pg-select')">
+        ← <span data-en="Back" data-am="ወደ ኋላ">Back</span>
+      </button>
+    </div>
+  </nav>
+  <div class="pkg-wrap">
+    <div class="eyebrow" data-en="OUR PACKAGES" data-am="ጥቅሎቻችን">OUR PACKAGES</div>
+    <h2 class="sec-title">
+      <span data-en="Choose Your " data-am="ደረጃዎን ">Choose Your </span>
+      <span class="gold" data-en="Standard" data-am="ይምረጡ">Standard</span>
+    </h2>
+    <p class="pkg-intro"
+       data-en="Every package is a permanent, one-time build. No monthly retainers. No dependency. You own everything we deliver — forever."
+       data-am="ሁሉም ጥቅሎች ቋሚ፣ አንድ ጊዜ ግንባታ ናቸው። ወርሃዊ ክፍያ የለም። ሁሉም ለእርስዎ ናቸው — ለዘላለም።">
+      Every package is a permanent, one-time build. No monthly retainers. No dependency. You own everything we deliver — forever.
+    </p>
+    <div class="pkg-grid" id="pkgGrid"></div>
+    <div class="more-btn-wrap">
+      <button class="more-btn" onclick="goTo('pg-hero')"
+              data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 5: PACKAGE DETAIL ═══════════════ -->
+<div class="page" id="pg-pkg-detail">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <button class="back-btn" onclick="goTo('pg-packages')">
+      ← <span data-en="Back to Packages" data-am="ወደ ጥቅሎች">Back to Packages</span>
+    </button>
+  </nav>
+  <div class="detail-wrap" id="pkgDetailWrap"></div>
+  <div class="more-btn-wrap" style="padding:0 52px 40px">
+    <button class="more-btn" onclick="goTo('pg-hero')"
+            data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 6: SERVICES ═══════════════ -->
+<div class="page" id="pg-services">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <button class="back-btn" onclick="goTo('pg-select')">
+      ← <span data-en="Back" data-am="ወደ ኋላ">Back</span>
+    </button>
+  </nav>
+  <div class="svc-wrap">
+    <div class="eyebrow" data-en="SINGLE SERVICES" data-am="ነጠላ አገልግሎቶች">SINGLE SERVICES</div>
+    <h2 class="sec-title">
+      <span data-en="Pay for " data-am="ለሚፈልጉት ">Pay for </span>
+      <span class="gold" data-en="Exactly" data-am="ብቻ">Exactly</span>
+      <span data-en=" What You Need" data-am=" ይክፈሉ"> What You Need</span>
+    </h2>
+    <div class="filter-tabs">
+      <button class="ftab active" onclick="filterSvc('all',this)"        data-en="All"        data-am="ሁሉም">All</button>
+      <button class="ftab"        onclick="filterSvc('foundation',this)" data-en="Foundation" data-am="መሰረት">Foundation</button>
+      <button class="ftab"        onclick="filterSvc('system',this)"     data-en="System"     data-am="ሲስተም">System</button>
+      <button class="ftab"        onclick="filterSvc('operations',this)" data-en="Operations" data-am="ኦፐሬሽን">Operations</button>
+    </div>
+    <div class="svc-grid" id="svcGrid"></div>
+    <div class="more-btn-wrap">
+      <button class="more-btn" onclick="goTo('pg-hero')"
+              data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 7: SERVICE DETAIL ═══════════════ -->
+<div class="page" id="pg-svc-detail">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <button class="back-btn" onclick="goTo('pg-services')">
+      ← <span data-en="Back to Services" data-am="ወደ አገልግሎቶች">Back to Services</span>
+    </button>
+  </nav>
+  <div class="detail-wrap" id="svcDetailWrap"></div>
+  <div class="more-btn-wrap" style="padding:0 52px 40px">
+    <button class="more-btn" onclick="goTo('pg-hero')"
+            data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 8: SIGN UP ═══════════════ -->
+<div class="page" id="pg-signup">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <button class="back-btn" id="signupBackBtn">
+      ← <span data-en="Back" data-am="ወደ ኋላ">Back</span>
+    </button>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">GILD</div>
+      <div class="eyebrow" style="justify-content:center"
+           data-en="CREATE YOUR ACCOUNT" data-am="መለያ ይፍጠሩ">CREATE YOUR ACCOUNT</div>
+      <h2 class="auth-title" data-en="Before We Begin" data-am="ከምንጀምር በፊት">Before We Begin</h2>
+      <p class="auth-sub"
+         data-en="Create your account to secure your slot and track your project."
+         data-am="ቦታዎን ለማስጠበቅ እና ፕሮጀክትዎን ለመከታተል መለያ ይፍጠሩ።">
+        Create your account to secure your slot and track your project.
+      </p>
+
+      <!-- STEP A: Email + Password -->
+      <div id="su-step-1">
+        <div class="auth-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-en="Full Name" data-am="ሙሉ ስም">Full Name</label>
+              <input type="text" id="su-name" placeholder="Abebe Kebede" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label data-en="Business Name" data-am="የቢዝነስ ስም">Business Name</label>
+              <input type="text" id="su-biz" placeholder="Your Business">
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-en="Email Address" data-am="ኢሜይል አድራሻ">Email Address</label>
+            <input type="email" id="su-email" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label data-en="Password" data-am="የምስጢር ቃል">Password</label>
+            <input type="password" id="su-pass" placeholder="Min. 8 characters">
+          </div>
+          <div class="form-err" id="suErr"></div>
+          <button class="btn-gold full" id="suSendOtpBtn" onclick="sendOTP()"
+                  data-en="Send Verification Code →" data-am="የማረጋገጫ ኮድ ላክ →">
+            Send Verification Code →
+          </button>
+          <p class="auth-note"
+             data-en="Already have an account? <a onclick='goTo(\"pg-login\")'>Sign in</a>"
+             data-am="መለያ አለዎ? <a onclick='goTo(\"pg-login\")'>ይግቡ</a>">
+            Already have an account? <a onclick='goTo("pg-login")'>Sign in</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- STEP B: OTP Verification -->
+      <div id="su-step-2" style="display:none">
+        <div class="auth-form">
+          <div class="otp-info">
+            <div class="otp-info-icon">✉</div>
+            <p data-en="We sent a 5-digit code to" data-am="5-ዲጂት ኮድ ወደ">We sent a 5-digit code to</p>
+            <strong id="otpEmailDisplay"></strong>
+          </div>
+          <div class="form-group">
+            <label data-en="Verification Code" data-am="የማረጋገጫ ኮድ">Verification Code</label>
+            <input type="text" id="su-otp" placeholder="_ _ _ _ _"
+                   maxlength="5" class="otp-input" autocomplete="one-time-code">
+          </div>
+          <div class="form-err" id="otpErr"></div>
+          <button class="btn-gold full" onclick="verifyOTP()"
+                  data-en="Verify & Continue →" data-am="ያረጋግጡ እና ቀጥሉ →">
+            Verify & Continue →
+          </button>
+          <div class="resend-row">
+            <span data-en="Didn't receive it?" data-am="አልደረሰዎም?">Didn't receive it?</span>
+            <button class="resend-btn" id="resendBtn" onclick="resendOTP()" disabled
+                    data-en="Resend Code" data-am="ኮድ ዳግም ላክ">Resend Code</button>
+            <span class="resend-timer" id="resendTimer">60s</span>
+          </div>
+          <button class="btn-back-link" onclick="showSuStep(1)"
+                  data-en="← Change email" data-am="← ኢሜይል ቀይር">← Change email</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 9: LOGIN ═══════════════ -->
+<div class="page" id="pg-login">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <button class="back-btn" onclick="goTo('pg-signup')">
+      ← <span data-en="Back" data-am="ወደ ኋላ">Back</span>
+    </button>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">GILD</div>
+      <div class="eyebrow" style="justify-content:center"
+           data-en="WELCOME BACK" data-am="እንኳን ተመለሱ">WELCOME BACK</div>
+      <h2 class="auth-title" data-en="Sign In" data-am="ይግቡ">Sign In</h2>
+      <div class="auth-form">
+        <div class="form-group">
+          <label data-en="Email Address" data-am="ኢሜይል አድራሻ">Email Address</label>
+          <input type="email" id="li-email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label data-en="Password" data-am="የምስጢር ቃል">Password</label>
+          <input type="password" id="li-pass" placeholder="Your password">
+        </div>
+        <div class="form-err" id="liErr"></div>
+        <button class="btn-gold full" onclick="handleLogin()"
+                data-en="Sign In & Continue →" data-am="ይግቡ እና ቀጥሉ →">Sign In & Continue →</button>
+        <button class="btn-forgot" onclick="goTo('pg-forgot')"
+                data-en="Forgot your password?" data-am="የምስጢር ቃልዎን ረሱ?">Forgot your password?</button>
+        <p class="auth-note"
+           data-en="New to GILD? <a onclick='goTo(\"pg-signup\")'>Create account</a>"
+           data-am="አዲስ ነዎ? <a onclick='goTo(\"pg-signup\")'>መለያ ፍጠሩ</a>">
+          New to GILD? <a onclick='goTo("pg-signup")'>Create account</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 10: FORGOT PASSWORD ═══════════════ -->
+<div class="page" id="pg-forgot">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <button class="back-btn" onclick="goTo('pg-login')">
+      ← <span data-en="Back to Sign In" data-am="ወደ ስምምነት">Back to Sign In</span>
+    </button>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">GILD</div>
+      <div class="eyebrow" style="justify-content:center"
+           data-en="PASSWORD RESET" data-am="የምስጢር ቃል ዳግምስ">PASSWORD RESET</div>
+
+      <!-- Step 1: Enter email -->
+      <div id="fp-step-1">
+        <h2 class="auth-title" data-en="Reset Your Password" data-am="የምስጢር ቃልዎን ዳግምስ">Reset Your Password</h2>
+        <p class="auth-sub"
+           data-en="Enter your email and we'll send you a reset code."
+           data-am="ኢሜይልዎን ያስገቡ እና reset code እንልካለን።">
+          Enter your email and we'll send you a reset code.
+        </p>
+        <div class="auth-form">
+          <div class="form-group">
+            <label data-en="Email Address" data-am="ኢሜይል አድራሻ">Email Address</label>
+            <input type="email" id="fp-email" placeholder="you@example.com">
+          </div>
+          <div class="form-err" id="fpErr1"></div>
+          <button class="btn-gold full" onclick="sendResetCode()"
+                  data-en="Send Reset Code →" data-am="Reset ኮድ ላክ →">Send Reset Code →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Enter code + new password -->
+      <div id="fp-step-2" style="display:none">
+        <h2 class="auth-title" data-en="Enter Reset Code" data-am="Reset ኮድ ያስገቡ">Enter Reset Code</h2>
+        <p class="auth-sub"
+           data-en="Enter the 5-digit code we sent to your email, then set a new password."
+           data-am="ወደ ኢሜይልዎ የላክነውን 5-ዲጂት ኮድ ያስገቡ ከዛ አዲስ የምስጢር ቃል ያዘጋጁ።">
+          Enter the 5-digit code we sent to your email, then set a new password.
+        </p>
+        <div class="auth-form">
+          <div class="form-group">
+            <label data-en="Reset Code" data-am="Reset ኮድ">Reset Code</label>
+            <input type="text" id="fp-code" placeholder="_ _ _ _ _"
+                   maxlength="5" class="otp-input">
+          </div>
+          <div class="form-group">
+            <label data-en="New Password" data-am="አዲስ የምስጢር ቃል">New Password</label>
+            <input type="password" id="fp-newpass" placeholder="Min. 8 characters">
+          </div>
+          <div class="form-err" id="fpErr2"></div>
+          <button class="btn-gold full" onclick="verifyResetCode()"
+                  data-en="Reset Password →" data-am="የምስጢር ቃል ዳግምስ →">Reset Password →</button>
+          <div class="resend-row">
+            <span data-en="Didn't receive it?" data-am="አልደረሰዎም?">Didn't receive it?</span>
+            <button class="resend-btn" id="fpResendBtn" onclick="sendResetCode(true)" disabled
+                    data-en="Resend" data-am="ዳግም ላክ">Resend</button>
+            <span class="resend-timer" id="fpResendTimer">60s</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="fp-step-3" style="display:none">
+        <div class="success-box">
+          <div class="success-icon">✓</div>
+          <h3 data-en="Password Updated!" data-am="የምስጢር ቃሉ ተቀይሯል!">Password Updated!</h3>
+          <p data-en="Your password has been reset successfully." data-am="የምስጢር ቃልዎ በተሳካ ሁኔታ ዳግምስ ሆኗል።">Your password has been reset successfully.</p>
+          <button class="btn-gold" style="margin-top:20px" onclick="goTo('pg-login')"
+                  data-en="Sign In Now →" data-am="አሁን ይግቡ →">Sign In Now →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 11: ONBOARDING ═══════════════ -->
+<div class="page" id="pg-onboard">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+    <div class="ob-progress-wrap">
+      <div class="ob-progress-bar">
+        <div class="ob-progress-fill" id="obFill"></div>
+      </div>
+      <span class="ob-step-txt" id="obStepTxt">Step 1 of 6</span>
+    </div>
+  </nav>
+  <div class="ob-wrap">
+    <div class="ob-card" id="obCard"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 12: CONFIRMATION ═══════════════ -->
+<div class="page" id="pg-confirm">
+  <nav class="mnav stuck">
+    <div class="nav-logo" onclick="goTo('pg-hero')">GILD</div>
+  </nav>
+  <div class="confirm-wrap">
+    <div class="confirm-card">
+      <div class="confirm-icon">⚜️</div>
+      <h2 class="confirm-title" data-en="Your Slot is Secured." data-am="ቦታዎ ተጠብቋል።">Your Slot is Secured.</h2>
+      <p class="confirm-sub"
+         data-en="Thank you for choosing GILD. Here is a summary of what you submitted:"
+         data-am="GILD ን ስለመረጡ እናመሰግናለን።">
+        Thank you for choosing GILD. Here is a summary of what you submitted:
+      </p>
+      <div class="confirm-summary" id="confirmSummary"></div>
+      <div class="confirm-next">
+        <p class="confirm-next-title" data-en="What Happens Next:" data-am="ቀጥሎ ምን ይሆናል:">What Happens Next:</p>
+        <div class="confirm-steps">
+          <div class="cs">
+            <span class="cs-n">01</span>
+            <span data-en="Click the button below to connect on LinkedIn"
+                  data-am="ከዚህ በታች ያለውን button ተጫኑ LinkedIn ለማገናኘት">
+              Click the button below to connect on LinkedIn
+            </span>
+          </div>
+          <div class="cs">
+            <span class="cs-n">02</span>
+            <span data-en="Send a quick 'Hi' — we already have your full information"
+                  data-am="ፈጣን 'Hi' ይላኩ — መረጃዎን አስቀድሞ አለን">
+              Send a quick 'Hi' — we already have your information
+            </span>
+          </div>
+          <div class="cs">
+            <span class="cs-n">03</span>
+            <span data-en="We will send you your Contract ID within 24 hours"
+                  data-am="ያለ 24 ሰዓት Contract ID ይልካሉ">
+              We will send you your Contract ID within 24 hours
+            </span>
+          </div>
+        </div>
+        <button class="btn-gold li-btn" id="linkedinBtn">
+          <span class="li-icon">in</span>
+          <span data-en="Connect on LinkedIn & Send Your Details"
+                data-am="LinkedIn ያገናኙ እና መረጃ ይላኩ">
+            Connect on LinkedIn & Send Your Details
+          </span>
+        </button>
+        <p class="confirm-note"
+           data-en="Your details will be sent to our team the moment you click the button above."
+           data-am="ከላይ ያለውን button ሲጫኑ ቡድናችን ዘንድ መረጃዎ ይላካሉ።">
+          Your details will be sent to our team the moment you click the button above.
+        </p>
+      </div>
+      <div class="more-btn-wrap" style="margin-top:24px">
+        <button class="more-btn" onclick="goTo('pg-hero')"
+                data-en="← Back to Home" data-am="← ወደ ቤት">← Back to Home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
